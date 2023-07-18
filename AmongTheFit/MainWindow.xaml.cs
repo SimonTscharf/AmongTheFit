@@ -46,8 +46,8 @@ namespace AmongTheFit
             views.Add(SettingsButton);
 
             userControls.Add(LoadingScreen);
-            userControls.Add(TrainingPlans);
             userControls.Add(Settings);
+            userControls.Add(TrainingPlans);
         }
         private void SelectUserControl(UserControl currentControl, ToggleButton currentButton)
         {
@@ -58,6 +58,7 @@ namespace AmongTheFit
             {
                 if (t.Name != currentButton.Name)
                     t.IsChecked = false;
+                
             }
 
             foreach (UserControl uc in userControls)

@@ -12,12 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json.Nodes;
-using System.Web.Script.Serialization;
-using Newtonsoft.Json;
-using System.IO;
 using AmongTheFit.Classes;
 
 namespace AmongTheFit.UserControls
@@ -27,27 +21,48 @@ namespace AmongTheFit.UserControls
     /// </summary>
     public partial class TrainingPlans : UserControl
     {
+
+        List<TrainingPlan> trainingPlans;
+
         public TrainingPlans()
         {
             InitializeComponent();
-        }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Exercise[] exercises = APIData.GetExercisesByMuscleGroup(Muscles.Chest);
+            trainingPlans = new List<TrainingPlan>();
 
-            foreach (Exercise ex in exercises)
-                ExercisesCBox.Items.Add(ex.name);
-
-            foreach(Muscles m in Enum.GetValues(typeof(Muscles)))
+            if (trainingPlans.Count == 0)
             {
-                MusclesCBox.Items.Add(m);
+                TrainingPlanGrid.Visibility = Visibility.Hidden;
+                ZeroTraningPlansText.Visibility = Visibility.Visible;
             }
         }
 
-        private void MusclesCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CreatePlanButton_Click(object sender, RoutedEventArgs e)
         {
+            TrainingPlan trainingPlan = new TrainingPlan("test", trainingPlans.Count + 1);
 
+            trainingPlans.Add(trainingPlan);
+
+            TrainingPlanGrid.Items.Add(trainingPlan);
+
+            if(trainingPlans.Count > 0)
+            {
+                TrainingPlanGrid.Visibility = Visibility.Visible;
+                ZeroTraningPlansText.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                TrainingPlanGrid.Visibility = Visibility.Hidden;
+                ZeroTraningPlansText.Visibility = Visibility.Visible;
+            }
+
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = TrainingPlanGrid.SelectedItem;
+
+            this.Content = new PlanConfig();
         }
     }
 }

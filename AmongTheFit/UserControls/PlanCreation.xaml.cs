@@ -12,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AmongTheFit.Classes;
 
 namespace AmongTheFit.UserControls
 {
     /// <summary>
-    /// Interaktionslogik für LoadingScreen.xaml
+    /// Interaktionslogik für PlanCreation.xaml
     /// </summary>
-    public partial class LoadingScreen : UserControl
+    public partial class PlanCreation : UserControl
     {
-        public LoadingScreen()
+        public PlanCreation()
         {
             InitializeComponent();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

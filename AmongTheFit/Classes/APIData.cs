@@ -16,10 +16,10 @@ namespace AmongTheFit.Classes
 
         public Exercise[] exercises { get; set; }
 
-        public static Exercise[] GetExercisesByMuscleGroup(Muscles muscle)
+        public async static Task<Exercise[]> GetExercises()
         {
             List<Exercise> exercises = new List<Exercise>();
-            Uri url = new Uri("https://wger.de/api/v2/exercise/?language=1&muscles=" + (int)muscle);
+            Uri url = new Uri("https://wger.de/api/v2/exercise/?language=1&offset=0&limit=999");
 
             HttpClient client = new HttpClient();
 
@@ -29,24 +29,24 @@ namespace AmongTheFit.Classes
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             string result = "";
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                result = response.Content.ReadAsStringAsync().Result;
-            }
 
-            result = result.Substring(result.IndexOf("\"results\":"));
-            result = result.Insert(0, "{");
-            result = result.Replace("results", "exercises");
+            HttpResponseMessage response = null;
+
+            await Task.Run(new Action(() =>
+            {
+                response = client.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                    result = response.Content.ReadAsStringAsync().Result;
+
+                result = result.Substring(result.IndexOf("\"results\":"));
+                result = result.Insert(0, "{");
+                result = result.Replace("results", "exercises");
+            }));
 
             var data = JsonConvert.DeserializeObject<APIData>(result);
 
-            foreach(Exercise e in data.exercises)
-            {
-                exercises.Add(e);
-            }
-
-            return exercises.ToArray();
+            return data.exercises;
         }
     }
 }

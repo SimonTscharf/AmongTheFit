@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="AmongTheFit.UserControls.PlanConfig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AmongTheFit.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="750"
+             Loaded="UserControl_Loaded">
+    <Grid x:Name="PlanConfigGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="10"
+                    Grid.Row="0">
+
+            <StackPanel>
+                <TextBlock Text="Muskel:"
+                           Foreground="White"
+                           FontSize="10"/>
+                
+                <ComboBox x:Name="MusclesCBox"
+                          HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Muscles}"
+                          Width="354"
+                          Height="25"
+                          SelectionChanged="MusclesCBox_SelectionChanged"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="10 0 0 0"
+                    Grid.Row="1">
+
+            <StackPanel>
+                <TextBlock Text="Übung:"
+                           Foreground="White"
+                           FontSize="10"/>
+
+                <ComboBox x:Name="ExercisesCBox"
+                          Width="240"
+                          Height="25"/>
+            </StackPanel>
+
+            <StackPanel Margin="10 0 0 0">
+                <TextBlock Text="Sets:"
+                           Foreground="White"
+                           FontSize="10"/>
+
+                <TextBox x:Name="SetsBox"
+                         VerticalContentAlignment="Center"
+                         Width="50"
+                         Height="25"/>
+            </StackPanel>
+
+            <StackPanel Margin="10 0 0 0">
+                <TextBlock Text="Reps:"
+                           Foreground="White"
+                           FontSize="10"/>
+
+                <TextBox x:Name="RepsBox"
+                         VerticalContentAlignment="Center"
+                         Width="45"
+                         Height="25"/>
+            </StackPanel>
+
+
+        </StackPanel>
+
+        <Button x:Name="AddExerciseButton"
+                Height="40"
+                Content="Hinzufügen"
+                FontSize="16"
+                VerticalAlignment="Top"
+                Margin="10"
+                Grid.Row="2"
+                Style="{StaticResource StandardButton}"
+                Click="AddExerciseButton_Click"/>
+
+        <DataGrid x:Name="ExercisesGrid"
+                  HorizontalScrollBarVisibility="Disabled"
+                  BorderThickness="0"
+                  Background="{StaticResource DarkBackgroundBrush}"
+                  GridLinesVisibility="None"
+                  RowHeaderWidth="0"
+                  Margin="0 10 10 10"
+                  Grid.Column="1"
+                  Grid.Row="0"
+                  Grid.RowSpan="3">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}"/>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Übung"
+                                    Binding="{Binding name}"
+                                    Width="2*"/>
+
+                <DataGridTextColumn Header="Sets"
+                                    Binding="{Binding sets}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Reps"
+                                    Binding="{Binding reps}"
+                                    Width="*"/>
+
+                <DataGridTemplateColumn Header="Löschen"
+                                        Width="0.8*">
+
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DeleteButton"
+                                    Content="X"
+                                    Style="{StaticResource StandardButton}"
+                                    Click="DeleteButton_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

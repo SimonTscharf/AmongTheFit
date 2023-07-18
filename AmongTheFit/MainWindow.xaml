@@ -218,11 +218,10 @@
               Background="{StaticResource LightBackgroundBrush}"
               Panel.ZIndex="-1">
 
-            
-            <uc:TrainingPlans x:Name="TrainingPlans"
-                              Visibility="Hidden"/>
             <uc:Settings x:Name="Settings"
                          Visibility="Hidden"/>
+            <uc:TrainingPlans x:Name="TrainingPlans"
+                              Visibility="Hidden"/>
 
             <Grid.Effect>
                 <BlurEffect Radius="0"/>
